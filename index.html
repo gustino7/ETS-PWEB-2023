@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>ETS Pemrogramman Web 2023</title>
+</head>
+
+<body onload="getBooks()">
+    <div class="container">
+        <div id="content" class="row row-cols-lg-3 row-cols-sm-1" style="width: 80%; margin: auto;">
+
+        </div>
+    </div>
+    <!-- Kerjakan dibawah sini -->
+    <script>
+        function getBooks() {
+            const url = "https://it-its.id/api/books";
+
+            //request api
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Handle the response data here
+                    displayBooks(data);
+                    console.log(data);
+                    // console.log("Selesai memproses data");
+                },
+                error: function (error) {
+                    // Handle errors here
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+        function displayBooks(data) {
+            data.forEach(book =>
+                displayBook(book)
+            );
+        }
+
+        function displayBook(book) {
+            const content = document.getElementById('content');
+            let html = `
+                <div class="col rounded-3 m-3" style="width: 25%; height: fit-content; padding: 2rem">
+                    <p class="fw-bold font-monospace text-start style=" font-size:2vw;">${book.title} (${book.year})</p>
+                    <p class="font-monospace text-start" style="font-size:1vw;">${book.author}</p>
+                </div>
+            `;
+            content.insertAdjacentHTML('beforeend', html);
+        }
+    </script>
+    <!-- Kerjakan diatas ini -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
